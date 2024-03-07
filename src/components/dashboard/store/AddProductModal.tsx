@@ -1,5 +1,6 @@
 import { Modal } from 'antd'
 import React from 'react'
+import AddProductForm from './AddProductForm'
 interface AddProductProps
 {
   open: boolean,
@@ -13,7 +14,7 @@ const AddProductModal = ({open, onClose}: AddProductProps) => {
     onCancel={onClose} 
     footer={null}
     >
-      
+      <AddProductForm/>
     </Modal>
   )
 }
