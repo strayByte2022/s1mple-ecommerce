@@ -1,4 +1,3 @@
-
 'use client'
 import { Spin } from 'antd';
 import { useRouter } from 'next/navigation'
@@ -7,7 +6,7 @@ import React, { useEffect } from 'react'
 const Home = () => {
     const router = useRouter();
     const checkAuth = () => {
-        const authState = true; //this should be change later
+        const authState = false; //this should be change later
         if (authState) {
             router.push("/dashboard")
         }
@@ -15,13 +14,13 @@ const Home = () => {
             router.push("/auth")
         }
     }
-    React.useEffect(() => {
+    useEffect(() => {
         checkAuth()
     })
     return (
-        <div className='w-full flex justify-center h-[100vh] items-center '>
+        <main className='w-full flex justify-center h-[100vh] items-center '>
             <Spin/>
-        </div>
+        </main>
     )
 }
 
