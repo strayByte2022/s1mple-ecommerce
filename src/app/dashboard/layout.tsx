@@ -9,7 +9,7 @@ const layout = ({
     return (
         <div>
             <DashboardMenu/>
-            <div className='p-3'>{children}</div>
+            <div className='flex justify-center p-4'>{children}</div>
         </div>
     )
 }
