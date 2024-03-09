@@ -6,6 +6,7 @@ import TextArea from 'antd/es/input/TextArea';
 
 import { pubKey } from '@/components/constant/uploadcarePubKey';
 import { Widget } from '@uploadcare/react-widget/min';
+import UploadcareUploader from './upload/UploadcareUploader';
 
 
 const AddProductForm = () => {
@@ -14,14 +15,11 @@ const AddProductForm = () => {
   const [originPrice, setOriginPrice] = useState(0)
   const [discountPrice, setDiscountPrice] = useState(0)
   const [discountRate, setDiscountRate] = useState(0)
+
   const [form] = Form.useForm();
 
   const resetStates = () => {
-    setProductName('')
-    setDescription('')
-    setOriginPrice(0)
-    setDiscountPrice(0)
-    setDiscountRate(0)
+    form.resetFields()
   }
   useEffect(() => {
     if (discountPrice <= originPrice) {
@@ -90,24 +88,21 @@ const AddProductForm = () => {
 
       </div>
       <Form.Item label='Upload product images'>
-        <Widget
-          publicKey={pubKey}
-          multiple={true}
-          previewStep
-          clearable
-          
-        />
+        <UploadcareUploader />
       </Form.Item>
 
+      <Form.Item>
 
-      <div className='flex flex-row justify-between'>
-        <Button htmlType='submit' style={{ backgroundColor: '#407FFF', color: 'white' }}>
-          Add
-        </Button>
-        <Button htmlType='reset' onClick={() => { location.reload() }} >
-          Clear
-        </Button>
-      </div>
+        <div className='flex flex-row justify-between'>
+          <Button htmlType='submit' style={{ backgroundColor: '#407FFF', color: 'white' }}>
+            Add
+          </Button>
+          <Button htmlType='reset' onClick={resetStates} >
+            Clear
+          </Button>
+        </div>
+      </Form.Item>
+
 
 
     </Form>
