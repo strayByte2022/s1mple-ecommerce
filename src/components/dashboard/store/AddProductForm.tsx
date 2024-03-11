@@ -1,11 +1,8 @@
-import { Form, Space, Button, Input, InputNumber } from 'antd';
+import { Form, Space, Button, Input, InputNumber, Typography } from 'antd';
 
 import React, { use, useEffect, useRef, useState } from 'react'
 
 import TextArea from 'antd/es/input/TextArea';
-
-import { pubKey } from '@/components/constant/uploadcarePubKey';
-import { Widget } from '@uploadcare/react-widget/min';
 import UploadcareUploader from './upload/UploadcareUploader';
 
 
@@ -14,93 +11,90 @@ const AddProductForm = () => {
   const [description, setDescription] = useState('')
   const [originPrice, setOriginPrice] = useState(0)
   const [discountPrice, setDiscountPrice] = useState(0)
-  const [discountRate, setDiscountRate] = useState(0)
+  const [discountRate, setDiscountRate] = useState<any>(0)
 
   const [form] = Form.useForm();
-
-  const resetStates = () => {
-    form.resetFields()
+  const handleFileChanges = (fileURL:any) =>{
+    console.log('received file name: ', fileURL)
   }
-  useEffect(() => {
-    if (discountPrice <= originPrice) {
-      // discountPrice = originPrice *(1-rate)
-      setDiscountRate(Math.floor((1 - discountPrice / originPrice) * 100))
-    }
-  }, [originPrice, discountPrice])
+ 
+
+  
+  const handleAddNewProduct = async (value:any)=>{
+    
+  }
   return (
-    <Form form={form} name="validateOnly" layout="vertical" autoComplete="off">
-      <Form.Item id="productName" label="Product Name" rules={[{ required: true }]}>
+    <Form form={form} name="validateOnly" layout="vertical" autoComplete="off" >
+      <Form.Item name="productName" label="Product Name" rules={[{ required: true }]}>
         <Input
 
-          onBlur={(e) => { setProductName(e.target.value) }}
+          onBlur={(e) => { setProductName(e.target.value);  }}
 
         />
       </Form.Item>
-      <Form.Item id="productDescription" label="Description" rules={[{ required: true }]}>
+      <Form.Item name="productDescription" label="Description" rules={[{ required: true }]}>
         <TextArea rows={4} placeholder='input description' onBlur={(e) => { setDescription(e.target.value) }} />
       </Form.Item>
-      <Form.Item id="productOriginPrice" label="Price" rules={[{ required: true, message: 'Please input the origin price' }]}>
-        <InputNumber
-          prefix='$'
-          controls={false}
-          className='w-1/3'
-          onBlur={(e) => {
-            console.log(e.target.value)
-            setOriginPrice(parseFloat(e.target.value))
 
-          }}
-          style={{ width: '40%' }}
-          value={originPrice}
-        />
-      </Form.Item>
+      <div className='grid grid-cols-2 gap-2'>
+        <Form.Item name="productOriginPrice" label="Price" rules={[{ required: true, message: 'Please input the origin price' }]}>
+          <InputNumber
+            prefix='$'
+            controls={false}
+            className='w-full'
+            onChange={(e: any) => {
+              console.log(e);
+              setOriginPrice(parseFloat(e));
 
 
-      <div className='flex flex-row justify-between '>
-        <Form.Item id="discountPrice" label="Discount Price" >
+            }}
+
+            value={originPrice}
+          />
+        </Form.Item>
+
+        <Form.Item name="discountPrice" label="Discount Price" >
           <InputNumber
 
             prefix="$"
             controls={false}
-            className="w-1/3"
-            onBlur={(e) => {
-              console.log(e.target.value);
-              setDiscountPrice(parseFloat(e.target.value))
+            className="w-full"
+            onChange={(e: any) => {
+              console.log(e);
+              setDiscountPrice(parseFloat(e));
+
+
             }}
-            style={{ width: '100%' }}
+
             value={discountPrice}
           />
         </Form.Item>
-        <Form.Item id="discountRate" label="Discount Rate" >
-          <InputNumber
-            prefix="%"
-            controls={false}
-            value={discountRate ? discountRate : 0}
-            className="w-1/3"
-            onChange={(e) => {
-              console.log(e?.toString)
-            }}
-            readOnly
-            style={{ width: '100%' }}
-
-          />
-
+        <Form.Item name="discountRate" label="Discount Rate" >
+          <Typography>{discountRate}%</Typography>
         </Form.Item>
-
+        <Form.Item>
+          <Button onClick={() => {
+            const res = Math.floor((1 - discountPrice / originPrice) * 100);
+            setDiscountRate(res)
+            console.log(res)
+          }}>Apply discount</Button>
+        </Form.Item>
       </div>
-      <Form.Item label='Upload product images'>
-        <UploadcareUploader />
+
+      <Form.Item name='uploaderCare' label='Upload product images'>
+        <UploadcareUploader onFileChange={handleFileChanges} />
       </Form.Item>
 
-      <Form.Item>
+      <Form.Item name={'button'} >
 
-        <div className='flex flex-row justify-between'>
-          <Button htmlType='submit' style={{ backgroundColor: '#407FFF', color: 'white' }}>
-            Add
-          </Button>
-          <Button htmlType='reset' onClick={resetStates} >
-            Clear
-          </Button>
-        </div>
+
+        <Button htmlType='submit' style={{ backgroundColor: '#407FFF', color: 'white' }}>
+          Add
+        </Button>
+        <Button htmlType='button' onClick={() => { form.resetFields(); setDiscountRate(null); }} >
+          Clear
+        </Button>
+
       </Form.Item>
 
 

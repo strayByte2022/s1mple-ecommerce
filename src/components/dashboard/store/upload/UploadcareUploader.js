@@ -7,7 +7,10 @@ import { pubKey } from '@/components/constant/uploadcarePubKey';
 
 LR.registerBlocks(LR);
 
-function UploadcareUploader() {
+function UploadcareUploader({onFileChange}) {
+
+
+  
   const [files, setFiles] = useState([]);
   const ctxProviderRef = useRef(null);
 
@@ -17,8 +20,10 @@ function UploadcareUploader() {
 
     const handleChangeEvent = (e) => {
       console.log('change event payload:', e);
-
-      setFiles([...e.detail.allEntries.filter(f => f.status === 'success')]);
+      const newFiles = [...e.detail.allEntries.filter(f => f.status === 'success')];
+      onFileChange(newFiles.map(file=>file.cdnUrl))
+      setFiles(newFiles);
+      
     };
 
     /*
@@ -27,11 +32,12 @@ function UploadcareUploader() {
 
       See more: https://uploadcare.com/docs/file-uploader/events/
      */
+   
     ctxProvider.addEventListener('change', handleChangeEvent);
     return () => {
       ctxProvider.removeEventListener('change', handleChangeEvent);
     };
-  }, [setFiles]);
+  }, [setFiles, onFileChange]);
 
   return (
     <div className={st.pageWrapper}>
@@ -64,7 +70,7 @@ function UploadcareUploader() {
               alt={file.fileInfo.originalFilename || ''}
               title={file.fileInfo.originalFilename || ''}
             />
-            {console.log(file.uuid)}
+            
             <p className={st.previewData}>
               {file.fileInfo.originalFilename}
             </p>
