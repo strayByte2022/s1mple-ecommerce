@@ -14,21 +14,21 @@ const AddProductForm = () => {
   const [discountRate, setDiscountRate] = useState<any>(0)
 
   const [form] = Form.useForm();
-  const handleFileChanges = (fileURL:any) =>{
+  const handleFileChanges = (fileURL: any) => {
     console.log('received file name: ', fileURL)
   }
- 
 
-  
-  const handleAddNewProduct = async (value:any)=>{
-    
+
+
+  const handleAddNewProduct = async (value: any) => {
+
   }
   return (
     <Form form={form} name="validateOnly" layout="vertical" autoComplete="off" >
       <Form.Item name="productName" label="Product Name" rules={[{ required: true }]}>
         <Input
 
-          onBlur={(e) => { setProductName(e.target.value);  }}
+          onBlur={(e) => { setProductName(e.target.value); }}
 
         />
       </Form.Item>
@@ -85,15 +85,19 @@ const AddProductForm = () => {
         <UploadcareUploader onFileChange={handleFileChanges} />
       </Form.Item>
 
-      <Form.Item name={'button'} >
+      <Form.Item name={'button'}>
 
+        <div className='flex gap-2'>
 
-        <Button htmlType='submit' style={{ backgroundColor: '#407FFF', color: 'white' }}>
-          Add
-        </Button>
-        <Button htmlType='button' onClick={() => { form.resetFields(); setDiscountRate(null); }} >
-          Clear
-        </Button>
+          <Button htmlType='submit' style={{ backgroundColor: '#407FFF', color: 'white' }}>
+            Add
+          </Button>
+          <Button htmlType='button' onClick={() => { form.resetFields(); setDiscountRate(null); }} >
+            Clear
+          </Button>
+
+        </div>
+
 
       </Form.Item>
 
