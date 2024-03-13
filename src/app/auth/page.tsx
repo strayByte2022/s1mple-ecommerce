@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/utils'
 // import type { Database } from '@/lib/database.types'
-import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Input, Tooltip, Card, Button, message } from 'antd';
 
 export default function Login() {
@@ -55,7 +55,7 @@ export default function Login() {
 
   
   return (
-    <>
+    <div className='flex items-center justify-center'>
       {/* <input name="phone" onChange={(e) => setEmail(e.target.value)} value={phone} />
       <input
         type="password"
@@ -66,8 +66,8 @@ export default function Login() {
       <button onClick={handleSignUp}>Sign up</button>
       <button onClick={handleSignIn}>Sign in</button>
       <button onClick={handleSignOut}>Sign out</button> */}
-
-      <Card className='flex items-center justify-center'>
+   
+      <Card className='flex-col mt-8 items-center'>
         <Input
           placeholder="Enter your username"
           prefix={<UserOutlined className="site-form-item-icon" />}
@@ -77,22 +77,25 @@ export default function Login() {
             </Tooltip>
           }
           onChange={(e) => setPhone(e.target.value)}
+          className='mb-4'
         />
         <Input
           placeholder="Enter your password"
-          prefix={<UserOutlined className="site-form-item-icon" />}
+          //<LockOutlined />
+          prefix={<LockOutlined className="site-form-item-icon" />}
           suffix={
             <Tooltip title="Extra information">
               <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
             </Tooltip>
           }
           onChange={(e) => setPassword(e.target.value)}
+          className='mb-4'
         />
         <Button onClick={handleSignIn}>
           Sign In
         </Button>
       </Card>
 
-    </>
+    </div>
   )
 }

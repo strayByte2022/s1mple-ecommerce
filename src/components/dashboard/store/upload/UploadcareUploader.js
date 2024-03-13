@@ -21,7 +21,7 @@ function UploadcareUploader({onFileChange}) {
     const handleChangeEvent = (e) => {
       console.log('change event payload:', e);
       const newFiles = [...e.detail.allEntries.filter(f => f.status === 'success')];
-      onFileChange(newFiles.map(file=>file.cdnUrl))
+      onFileChange(newFiles.map(f => f.cdnUrl));
       setFiles(newFiles);
       
     };

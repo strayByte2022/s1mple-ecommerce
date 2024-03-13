@@ -12,16 +12,22 @@ const AddProductForm = () => {
   const [originPrice, setOriginPrice] = useState(0)
   const [discountPrice, setDiscountPrice] = useState(0)
   const [discountRate, setDiscountRate] = useState<any>(0)
-
+  const [fileURL, setFileURL] = useState<any>([])
   const [form] = Form.useForm();
-  const handleFileChanges = (fileURL: any) => {
-    console.log('received file name: ', fileURL)
-  }
+  const { v4: uuidv4 } = require('uuid');
+  const productID = uuidv4(); 
+  const handleFileChanges = (urls: any) => {
+    
+    setFileURL(urls)
+    
+  } 
 
-
-
+  useEffect(() => {
+    console.log('fileURL', fileURL)
+  }, [fileURL])
+  //set 
   const handleAddNewProduct = async (value: any) => {
-
+    
   }
   return (
     <Form form={form} name="validateOnly" layout="vertical" autoComplete="off" >
@@ -92,7 +98,7 @@ const AddProductForm = () => {
           <Button htmlType='submit' style={{ backgroundColor: '#407FFF', color: 'white' }}>
             Add
           </Button>
-          <Button htmlType='button' onClick={() => { form.resetFields(); setDiscountRate(null); }} >
+          <Button htmlType='button' onClick={() => { form.resetFields(); setDiscountRate(null); setFileURL(null) }} >
             Clear
           </Button>
 
