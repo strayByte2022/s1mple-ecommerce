@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.1",
+    "@supabase/auth-helpers-nextjs": "^0.9.0",
+    "@supabase/ssr": "^0.1.0",
+    "@supabase/supabase-js": "^2.39.7",
     "@uploadcare/blocks": "0.32.4",
     "@uploadcare/react-widget": "^2.4.5",
     "antd": "^5.15.0",

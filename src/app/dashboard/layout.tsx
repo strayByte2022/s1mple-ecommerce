@@ -1,11 +1,26 @@
-import DashboardMenu from '@/components/dashboard/DashboardMenu'
-import React from 'react'
+'use client'
 
-const layout = ({
+import DashboardMenu from '@/components/dashboard/DashboardMenu'
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react'
+
+const DashboardLayout = ({
     children,
   }: {
     children: React.ReactNode;
   }) => {
+    const router = useRouter();
+    useEffect(() => {
+      checkAuth();
+    }, []);
+    const checkAuth = () => {
+      const storage_user: any = localStorage.getItem('user_info');
+  
+      if (storage_user) router.push('/dashboard/');
+      else {
+        router.push('/auth');
+      }
+    };
     return (
         <div>
             <DashboardMenu/>
@@ -14,4 +29,4 @@ const layout = ({
     )
 }
 
-export default layout
+export default DashboardLayout

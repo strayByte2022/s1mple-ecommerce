@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, LogoutOutlined, MailOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -18,6 +18,13 @@ const items: MenuProps['items'] = [
         icon: <AppstoreOutlined />,
 
     },
+    {
+        label: 'Logout ',
+        key: 'Logout',
+        icon: <LogoutOutlined />
+    },
+    
+
 
 ];
 
@@ -31,6 +38,11 @@ const DashboardMenu= () => {
         {
             router.push('/dashboard/store')
         }
+        else if(e.key==='Logout')
+        {
+            localStorage.removeItem('user_info')
+            router.push('/auth')
+        }
         else
         {
             router.push('/dashboard/order')
@@ -38,9 +50,7 @@ const DashboardMenu= () => {
 
         
     };
-    React.useEffect(() => {
-        
-    });
+   
     return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} className='flex justify-start' />;
 };
 
