@@ -1,9 +1,10 @@
-import { Form, Space, Button, Input, InputNumber, Typography } from 'antd';
+import { Form, Space, Button, Input, InputNumber, Typography, message } from 'antd';
 
 import React, { use, useEffect, useRef, useState } from 'react'
 
 import TextArea from 'antd/es/input/TextArea';
 import UploadcareUploader from './upload/UploadcareUploader';
+import { supabase } from '@/utils';
 
 
 const AddProductForm = () => {
@@ -15,22 +16,47 @@ const AddProductForm = () => {
   const [fileURL, setFileURL] = useState<any>([])
   const [form] = Form.useForm();
   const { v4: uuidv4 } = require('uuid');
-  const productID = uuidv4(); 
+  const productID = uuidv4();
   const handleFileChanges = (urls: any) => {
-    
-    setFileURL(urls)
-    
-  } 
+
+    setFileURL(urls) //urls here is an array of urls
+
+  }
 
   useEffect(() => {
     console.log('fileURL', fileURL)
   }, [fileURL])
   //set 
   const handleAddNewProduct = async (value: any) => {
+    // 
+
+    const { data, error } = await supabase
+      .from('PRODUCT')
+      .insert([
+        {
+          PRODUCT_ID: productID,
+          PRODUCT_NAME: productName,
+          PRODUCT_DESCRIPTION: description,
+          ORIGINAL_PRICE: originPrice,
+          DISCOUNT_PRICE: discountPrice,
+          DISCOUNT_RATE: discountRate,
+          THUMBNAIL: fileURL // this is an array of urls
+        }
+      ])
+      .select()
+      console.log('data', data)
+      if(error){
+        message.error(error.message)
+      }
+      else
+      {
+        location.reload()
+      }
+    //PUSH IMAGE URL TO IMAGE TABLE
     
   }
   return (
-    <Form form={form} name="validateOnly" layout="vertical" autoComplete="off" >
+    <Form form={form} name="validateOnly" layout="vertical" autoComplete="off" onFinish={handleAddNewProduct} >
       <Form.Item name="productName" label="Product Name" rules={[{ required: true }]}>
         <Input
 

@@ -16,10 +16,8 @@ const DashboardLayout = ({
     const checkAuth = () => {
       const storage_user: any = localStorage.getItem('user_info');
   
-      if (storage_user) router.push('/dashboard/');
-      else {
-        router.push('/auth');
-      }
+      if (!storage_user) router.push('/auth');
+    
     };
     return (
         <div>

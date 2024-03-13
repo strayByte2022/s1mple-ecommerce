@@ -1,36 +1,10 @@
-import { Table } from 'antd';
+import { Button, Carousel, Image, Table } from 'antd';
 import { title } from 'process';
 import React, { useEffect, useState } from 'react'
 import { supabase } from '@/utils';
-const dataSource = [
-  {
-    key: '1',
-    PRODUCT_ID: '1',
-    PRODUCT_NAME: 'Product 1',
-    PRODUCT_DESCRIPTION: 'Product 1 Description',
-    ORIGINAL_PRICE: 100,
-    DISCOUNT_PRICE: 80,
-    DISCOUNT_RATE: 20
-  },
-  {
-    key: '2',
-    PRODUCT_ID: '2',
-    PRODUCT_NAME: 'Product 2',
-    PRODUCT_DESCRIPTION: 'Product 2 Description',
-    ORIGINAL_PRICE: 200,
-    DISCOUNT_PRICE: 160,
-    DISCOUNT_RATE: 20
-  },
-  {
-    key: '3',
-    PRODUCT_ID: '3',
-    PRODUCT_NAME: 'Product 3',
-    PRODUCT_DESCRIPTION: 'Product 3 Description',
-    ORIGINAL_PRICE: 300,
-    DISCOUNT_PRICE: 240,
-    DISCOUNT_RATE: 20
-  }
-];
+import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
+
 
 const columns = [
   {
@@ -61,8 +35,42 @@ const columns = [
   {
     title: 'Discount Rate',
     dataIndex: 'DISCOUNT_RATE',
-  }
+    key: 'DISCOUNT_RATE',
+  },
+  {
+    title: 'Image',
+    dataIndex: 'THUMBNAIL',
+    render: (_: any, urls: any) => {
 
+      return <Carousel>
+        <div>
+          {urls.THUMBNAIL?.map((url: any) => {
+            console.log('url', url)
+            return <Image src={url} key={url} alt='thumbnail' width={'80px'} />
+          }
+          )}
+        </div>
+
+      </Carousel>
+
+
+    },
+    key: 'THUMBNAIL',
+  },
+  {
+    title: 'Delete',
+    dataIndex: 'PRODUCT_ID',
+    render: (id: any) => {
+      return <Button onClick={async () => {
+        const { data, error } = await supabase
+          .from('PRODUCT')
+          .delete()
+          .eq('PRODUCT_ID', id)
+        if (error) console.log('error', error)
+        else location.reload()
+      }}>Delete</Button>
+    }
+  }
 ];
 
 const ProductTable = () => {
@@ -82,7 +90,7 @@ const ProductTable = () => {
   }, []);
   const [data, setData] = useState<any>([]);
   return (
-    <Table dataSource={data} columns={columns} /> 
+    <Table dataSource={data} columns={columns} />
   )
 }
 
