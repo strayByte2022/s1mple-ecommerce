@@ -42,8 +42,7 @@ const columns = [
     dataIndex: 'THUMBNAIL',
     render: (_: any, urls: any) => {
 
-      return <Carousel>
-        <div>
+      return <div className='flex flex-wrap gap-3'>
           {urls.THUMBNAIL?.map((url: any) => {
             console.log('url', url)
             return <Image src={url} key={url} alt='thumbnail' width={'80px'} />
@@ -51,7 +50,7 @@ const columns = [
           )}
         </div>
 
-      </Carousel>
+  
 
 
     },
