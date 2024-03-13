@@ -56,17 +56,8 @@ export default function Login() {
   
   return (
     <div className='flex items-center justify-center'>
-      {/* <input name="phone" onChange={(e) => setEmail(e.target.value)} value={phone} />
-      <input
-        type="password"
-        name="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <button onClick={handleSignUp}>Sign up</button>
-      <button onClick={handleSignIn}>Sign in</button>
-      <button onClick={handleSignOut}>Sign out</button> */}
    
+    
       <Card className='flex-col mt-8 items-center'>
         <Input
           placeholder="Enter your username"
