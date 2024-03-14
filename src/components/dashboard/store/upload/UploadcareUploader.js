@@ -46,7 +46,7 @@ function UploadcareUploader({onFileChange}) {
 
       <lr-config
         ctx-name="my-uploader"
-        pubkey= {pubKey}
+        pubkey= {process.env.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY}
         sourceList="local, url, camera, dropbox"
       ></lr-config>
       <lr-file-uploader-regular

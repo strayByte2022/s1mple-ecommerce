@@ -11,6 +11,8 @@ import { Input, Tooltip, Card, Button, message } from 'antd';
 export default function Login() {
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
   const router = useRouter()
   
 
@@ -36,7 +38,7 @@ export default function Login() {
     }
     const check = data.filter((item) => item?.phone == phone);
     if (check.length > 0) {
-      const checkPassword = data.filter((item) => item.password == password)
+      const checkPassword = data.filter((item) => item.password == password) //if the password exists in the database
       if (checkPassword.length > 0) {
         window.localStorage.setItem('user_info', JSON.stringify(check[0].phone));
 
@@ -63,14 +65,14 @@ export default function Login() {
           placeholder="Enter your username"
           prefix={<UserOutlined className="site-form-item-icon" />}
           suffix={
-            <Tooltip title="Extra information">
+            <Tooltip title="for test: 0867997139 - 123">
               <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
             </Tooltip>
           }
           onChange={(e) => setPhone(e.target.value)}
           className='mb-4'
         />
-        <Input
+        {/* <Input
           placeholder="Enter your password"
           //<LockOutlined />
           prefix={<LockOutlined className="site-form-item-icon" />}
@@ -81,6 +83,13 @@ export default function Login() {
           }
           onChange={(e) => setPassword(e.target.value)}
           className='mb-4'
+        /> */}
+        <Input.Password
+          placeholder="input password"
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+          onChange = {(e) => setPassword(e.target.value)}
+          className = 'mb-4'
         />
         <Button onClick={handleSignIn}>
           Sign In
