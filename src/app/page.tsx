@@ -7,7 +7,7 @@ const Home = () => {
     const router = useRouter();
     useEffect(() => {
         checkAuth();
-    }, []);
+    });
     const checkAuth = () => {
         const storage_user: any = localStorage.getItem('user_info');
 

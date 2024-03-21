@@ -2,7 +2,7 @@ import { Button, Carousel, Image, Table } from 'antd';
 import { title } from 'process';
 import React, { useEffect, useState } from 'react'
 import { supabase } from '@/utils';
-import { render } from 'react-dom';
+
 import { createRoot } from 'react-dom/client';
 
 

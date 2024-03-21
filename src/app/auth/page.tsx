@@ -18,7 +18,7 @@ export default function Login() {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  });
   const checkAuth = () => {
     const storage_user: any = localStorage.getItem('user_info');
 
